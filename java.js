@@ -62,6 +62,8 @@ let allpays=[];
     }
 
     function afficherpays(pays){
+        const paysfiche=document.querySelector(".contries");
+        paysfiche.innerHTML=""; 
         pays.forEach((item,index)=>{
             const div=document.createElement("div");
             div.classList.add("indice","cnt");
@@ -131,14 +133,51 @@ let allpays=[];
         });
     });
     };
-    
-          
+    function check(region){
+       let paysfil;
+       if(region.length > 0){
+           paysfil=allpays.filter(c=> region.includes(c.region.trim()));
+       }else{
+           paysfil=allpays;
+       };
+       afficherpays(paysfil);
+
+    };
+    document.querySelectorAll(".region input[type='checkbox']").forEach((check1)=>{
+        check1.addEventListener("change", () => {
+            let  region=[];
+            document.querySelectorAll(".region input[type='checkbox']:checked").forEach((check2)=>{
+                region.push(check2.id);
+             
+            });
+            console.log("region est",region);
+            check(region);   
+           
+        });
+        
+
+    });
+    function afficherpays1(paysfixe){
+        let afficher;
+        if(paysfixe.length > 0){
+            afficher=allpays.filter(c=> c.name.toLowerCase().includes(paysfixe.toLowerCase()));
+        } else{
+            afficher=allpays;
+        };
+        afficherpays(afficher);
+    };
+    const search=document.querySelector(".text");
+    search.addEventListener("keyup", () => {
+        afficherpays1(search.value);
+
+    });
 
 
 
 
 
-    
 
 
-recuperer();
+
+
+    recuperer();
